@@ -1,0 +1,67 @@
+.ngx-rating {
+  display: flex;
+  flex-direction: row;
+
+  .ngx-rating__star-container {
+    display: flex;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .ngx-rating__star {
+    width: 2em;
+    height: 2em;
+    user-select: none;
+    transition: color 0.1s ease-in-out;
+
+    &--animating {
+      animation: ngxRatingStarScale 0.75s ease-in-out;
+    }
+  }
+
+  .ngx-rating__star-container__particle {
+    position: absolute;
+    transform: translate3d(-50%, -50%, 0);
+    left: 50%;
+    top: 50%;
+    user-select: none;
+    padding-left: 0.08em;
+    padding-top: 0.1em;
+
+    svg {
+      display: block;
+    }
+  }
+
+  .ngx-rating__star-container__particle-scalable {
+    transform: scale(1);
+  }
+
+  .ngx-rating__star-container__particle-content,
+  .ngx-rating__star-container__particle-scalable {
+    transition: transform 0.5s ease-out;
+  }
+
+  .ngx-rating__star-container__default-particle {
+    width: 0.85em;
+    height: 0.85em;
+  }
+
+  @keyframes ngxRatingStarScale {
+    0% {
+      transform: scale(1);
+    }
+
+    25% {
+      transform: scale(1.25);
+    }
+
+    50% {
+      transform: scale(0.85);
+    }
+
+    100% {
+      transform: scale(1);
+    }
+  }
+}

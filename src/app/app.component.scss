@@ -1,0 +1,13 @@
+.app-root {
+  .app-root__header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .app-root__theme-toggle-container .text {
+    font-size: 1.2rem;
+    line-height: 1.2rem;
+    user-select: none;
+  }
+}

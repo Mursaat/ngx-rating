@@ -1,0 +1,43 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    /** Main options **/
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2018", "dom"],
+    "outDir": "./dist/out-tsc",
+
+    /** Strict typechecking options **/
+    "strict": true,
+
+    /** Additional checks **/
+    "forceConsistentCasingInFileNames": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+
+    /** Module resolution options **/
+    "moduleResolution": "node",
+    "typeRoots": ["node_modules/@types"],
+    "baseUrl": "./",
+    "paths": {
+      "ngx-rating": ["dist/ngx-rating/ngx-rating", "dist/ngx-rating"],
+      "@env": ["src/environments/environment.ts"],
+      "@core/*": ["src/app/core/*"],
+      "@shared/*": ["src/app/shared/*"]
+    },
+
+    /** Emit options **/
+    "importHelpers": true,
+    "sourceMap": true,
+    "downlevelIteration": true,
+    "declaration": false,
+    "experimentalDecorators": true
+  },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true
+  }
+}

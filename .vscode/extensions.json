@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "stylelint.vscode-stylelint",
+    "angular.ng-template",
+    "ms-vscode.vscode-typescript-tslint-plugin",
+    "mike-co.import-sorter"
+  ]
+}

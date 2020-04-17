@@ -1,0 +1,16 @@
+{
+  "tslint.rulesDirectory": "./node_modules/codelyzer",
+  "tslint.autoFixOnSave": true,
+  // Use the typescript version located in node_modules to make errors appear in vscode
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "stylelint.enable": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.tabSize": 2,
+  // This is handled by stylelint extensions
+  "css.validate": false,
+  "less.validate": false,
+  "scss.validate": false,
+  // Sort TypeScript on save
+  "editor.formatOnSave": true,
+  "importSorter.generalConfiguration.sortOnBeforeSave": true
+}

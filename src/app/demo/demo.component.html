@@ -1,0 +1,7 @@
+<nb-card>
+  <nb-card-header>Simple demo</nb-card-header>
+  <nb-card-body>
+    <ngx-rating [formControl]="starsFormControl"></ngx-rating>
+    <span *ngIf="starsCount$ | async as starsCount">{{ starsCount }} stars</span>
+  </nb-card-body>
+</nb-card>
