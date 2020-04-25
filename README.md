@@ -1,5 +1,7 @@
 # ngx-rating
 
+[![Actions Status](https://github.com/Mursaat/ngx-rating/workflows/Build/badge.svg)](https://github.com/Mursaat/ngx-rating/actions)
+
 ## TODO
 
 - The README 😊
