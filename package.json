@@ -1,5 +1,5 @@
 {
-  "name": "ngx-rating-app",
+  "name": "@mursaat/ngx-rating-app",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
