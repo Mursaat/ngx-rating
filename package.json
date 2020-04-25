@@ -5,7 +5,7 @@
     "ng": "ng",
     "build:library:watch": "ng build ngx-rating --watch",
     "start": "ng serve",
-    "build": "ng build ngx-rating  --prod",
+    "build": "ng build ngx-rating --prod",
     "test": "ng test",
     "lint": "npm run tslint && npm run stylelint",
     "tslint": "ng lint",
