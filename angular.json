@@ -71,18 +71,6 @@
             "browserTarget": "ngx-rating-app:build"
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js",
-            "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles/styles.scss"],
-            "scripts": []
-          }
-        },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -111,11 +99,9 @@
           }
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "@angular-builders/jest:run",
           "options": {
-            "main": "projects/ngx-rating/src/test.ts",
-            "tsConfig": "projects/ngx-rating/tsconfig.spec.json",
-            "karmaConfig": "projects/ngx-rating/karma.conf.js"
+            "tsConfig": "tsconfig.spec.json"
           }
         },
         "lint": {
