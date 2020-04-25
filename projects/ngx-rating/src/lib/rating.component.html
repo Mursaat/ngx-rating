@@ -1,40 +1,70 @@
 <ng-container *ngIf="colors$ | async as colors">
   <div
-    #starContainer
+    #star
     *ngFor="let starIndex of starIterator$ | async"
-    class="ngx-rating__star-container"
+    class="ngx-rating__star"
     (click)="onStarClicked(starIndex)"
     (mouseenter)="onMouseEnter(starIndex)"
     (mouseleave)="onMouseLeave(starIndex)"
-    [style.color]="
-      starIndex <= ((starIndexToShow$ | async) || 0) ? colors[(starIndexToShow$ | async) || 0] : emptyColor
-    "
+    [attr.aria-label]="((starAriaLabels$ | async) || [])[starIndex]"
+    [style.animation-delay]="starIndex * delayPerStarMs + 'ms'"
   >
-    <svg
-      #star
-      aria-hidden="true"
-      focusable="false"
-      data-prefix="far"
-      data-icon="star"
-      class="ngx-rating__star"
-      role="img"
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 576 512"
+    <div
+      class="ngx-rating__star__svg ngx-rating__star__svg--filled"
       [style.animation-delay]="starIndex * delayPerStarMs + 'ms'"
+      [style.color]="
+        starIndex <= ((starIndexToShow$ | async) || 0) ? colors[(starIndexToShow$ | async) || 0] : emptyColor
+      "
     >
-      <path
-        fill="currentColor"
-        class="ngx-rating__star__path"
-        d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-      ></path>
-    </svg>
+      <div class="ngx-rating__star__svg-centerer">
+        <ng-container *ngIf="starIndex <= ((starIndexToShow$ | async) || 0)">
+          <ng-container *ngTemplateOutlet="starFilledDefaultTemplate"></ng-container>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="ngx-rating__star__svg ngx-rating__star__svg--empty" [style.color]="emptyColor">
+      <div class="ngx-rating__star__svg-centerer">
+        <ng-container *ngTemplateOutlet="starEmptyDefaultTemplate"></ng-container>
+      </div>
+    </div>
   </div>
 </ng-container>
 
-<ng-template #defaultParticle>
-  <div class="ngx-rating__star-container__default-particle">
-    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="50" cy="50" r="50" fill="currentColor" />
-    </svg>
-  </div>
+<ng-template #starFilledDefaultTemplate>
+  <svg
+    aria-hidden="true"
+    focusable="false"
+    data-prefix="far"
+    data-icon="star"
+    role="img"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 576 512"
+  >
+    <path
+      fill="currentColor"
+      class="ngx-rating__star__path"
+      d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
+    ></path>
+  </svg>
+</ng-template>
+
+<ng-template #starEmptyDefaultTemplate>
+  <svg
+    aria-hidden="true"
+    focusable="false"
+    data-prefix="far"
+    data-icon="star"
+    class="ngx-rating__star__svg ngx-rating__star__svg--empty"
+    role="img"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 576 512"
+  >
+    <path
+      inkscape:connector-curvature="0"
+      fill="currentcolor"
+      d="M 259.3,17.781019 194,150.18102 l -146.1,21.3 c -26.2,3.8 -36.7,36.1 -17.7,54.6 l 105.7,103 -25,145.5 c -4.5,26.3 23.2,46 46.4,33.7 l 130.7,-68.7 130.7,68.7 c 23.2,12.2 50.9,-7.4 46.4,-33.7 l -25,-145.5 105.7,-103 c 19,-18.5 8.5,-50.8 -17.7,-54.6 L 382,150.18102 316.7,17.781019 c -11.7,-23.6000004 -45.6,-23.9000004 -57.4,0 z"
+      id="path2-8"
+    />
+  </svg>
 </ng-template>

@@ -1,50 +1,46 @@
 .ngx-rating {
   display: flex;
   flex-direction: row;
-
-  .ngx-rating__star-container {
-    display: flex;
-    position: relative;
-    cursor: pointer;
-  }
+  //TODO REMOVE
+  font-size: 1.25rem;
 
   .ngx-rating__star {
     width: 2em;
     height: 2em;
-    user-select: none;
-    transition: color 0.1s ease-in-out;
+    display: flex;
+    position: relative;
+    cursor: pointer;
 
     &--animating {
       animation: ngxRatingStarScale 0.75s ease-in-out;
     }
   }
 
-  .ngx-rating__star-container__particle {
+  .ngx-rating__star__svg-centerer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  .ngx-rating__star__svg {
     position: absolute;
-    transform: translate3d(-50%, -50%, 0);
-    left: 50%;
-    top: 50%;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
     user-select: none;
-    padding-left: 0.08em;
-    padding-top: 0.1em;
+    transition: color 0.1s ease-in-out;
 
-    svg {
-      display: block;
+    &--filled {
+      z-index: 1;
     }
-  }
 
-  .ngx-rating__star-container__particle-scalable {
-    transform: scale(1);
-  }
-
-  .ngx-rating__star-container__particle-content,
-  .ngx-rating__star-container__particle-scalable {
-    transition: transform 0.5s ease-out;
-  }
-
-  .ngx-rating__star-container__default-particle {
-    width: 0.85em;
-    height: 0.85em;
+    &--empty {
+      transform: scale(0.98);
+    }
   }
 
   @keyframes ngxRatingStarScale {

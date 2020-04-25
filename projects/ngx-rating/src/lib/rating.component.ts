@@ -1,9 +1,9 @@
-import { BehaviorSubject, combineLatest, merge, ReplaySubject, Subject } from 'rxjs';
+import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
 import { distinctUntilChanged, map, shareReplay, startWith, tap } from 'rxjs/operators';
 
 import {
-    ChangeDetectionStrategy, Component, ElementRef, EmbeddedViewRef, forwardRef, HostBinding, Input,
-    QueryList, Renderer2, TemplateRef, ViewChild, ViewChildren, ViewEncapsulation
+    ChangeDetectionStrategy, Component, ElementRef, forwardRef, HostBinding, Input, QueryList,
+    Renderer2, ViewChildren, ViewEncapsulation
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -29,14 +29,11 @@ export class NgxRatingComponent implements ControlValueAccessor {
   @HostBinding('class.ngx-rating')
   public hasBoundClass = true;
 
-  @ViewChildren('starContainer')
-  public starContainers: QueryList<ElementRef> | undefined;
+  @HostBinding('attr.aria-label')
+  public ariaLabel = 'Stars to give an opinion';
 
   @ViewChildren('star')
   public stars: QueryList<ElementRef> | undefined;
-
-  @ViewChild('defaultParticle')
-  public defaultParticle: TemplateRef<any> | undefined;
 
   private ratingSubject = new Subject<number>();
   public rating$ = this.ratingSubject.asObservable().pipe(
@@ -66,9 +63,13 @@ export class NgxRatingComponent implements ControlValueAccessor {
     ),
   );
 
-  private startHexColorSubject = new BehaviorSubject<string>('#f44334');
-  private endHexColorSubject = new BehaviorSubject<string>('#4caf50');
-  private colorsInputRangeSubject = new ReplaySubject<string[]>();
+  private hexColorSubject = new BehaviorSubject<string | string[]>([
+    '#f44334',
+    '#ffa726',
+    '#fdd835',
+    '#cddc39',
+    '#8bc34a',
+  ]);
 
   @Input()
   public emptyColor = '#eaeaea';
@@ -79,18 +80,8 @@ export class NgxRatingComponent implements ControlValueAccessor {
   }
 
   @Input()
-  public set startHexColor(color: string) {
-    this.startHexColorSubject.next(color);
-  }
-
-  @Input()
-  public set endHexColor(color: string) {
-    this.endHexColorSubject.next(color);
-  }
-
-  @Input()
-  public set colors(colors: string[]) {
-    this.colorsInputRangeSubject.next(colors);
+  public set hexColor(colors: string | string[]) {
+    this.hexColorSubject.next(colors);
   }
 
   @Input()
@@ -102,22 +93,47 @@ export class NgxRatingComponent implements ControlValueAccessor {
   @Input()
   public particlesDisabled = false;
 
-  private colorsAutocomputeRange$ = combineLatest([
-    this.startHexColorSubject,
-    this.endHexColorSubject,
-    this.maxValue$,
-  ]).pipe(
-    map(([startHexColor, endHexColor, maxValue]: [string, string, number]) =>
+  private computeAriaAttrLabelSubject = new BehaviorSubject<(starCount: number) => string>(
+    (starCount: number) => starCount + ' ' + (starCount > 1 ? 'stars' : 'star'),
+  );
+
+  @Input()
+  public set computeAriaAttrLabel(fn: (starCount: number) => string) {
+    this.computeAriaAttrLabelSubject.next(fn);
+  }
+
+  public starAriaLabels$ = combineLatest([this.computeAriaAttrLabelSubject, this.maxValue$]).pipe(
+    map(([computeAriaAttrLabel, maxValue]: [(starCount: number) => string, number]) =>
       Array<string>(maxValue)
         .fill('')
-        .map((_val: string, starIndex: number) =>
-          findColorBetween(endHexColor, startHexColor, starIndex / (maxValue - 1 || 1)),
-        ),
+        .map((_val: string, starIndex: number) => computeAriaAttrLabel(starIndex + 1)),
     ),
     shareReplay(1),
   );
 
-  public colors$ = merge(this.colorsAutocomputeRange$, this.colorsInputRangeSubject).pipe(shareReplay(1));
+  public colors$ = combineLatest([this.hexColorSubject, this.maxValue$]).pipe(
+    map(([hexColor, maxValue]: [string | string[], number]) =>
+      Array<string>(maxValue)
+        .fill('')
+        .map((_val: string, starIndex: number) => {
+          if (typeof hexColor === 'string') {
+            return hexColor;
+          }
+          const hexColors = hexColor as string[];
+          if (hexColors.length >= maxValue) {
+            return hexColors[starIndex];
+          }
+
+          const colorRatio = (starIndex * (hexColors.length - 1)) / (maxValue - 1);
+          return findColorBetween(
+            hexColors[Math.ceil(colorRatio)],
+            hexColors[Math.floor(colorRatio)],
+            colorRatio - Math.floor(colorRatio),
+          );
+        }),
+    ),
+    shareReplay(1),
+  );
 
   public constructor(private renderer: Renderer2) {}
 
@@ -125,21 +141,8 @@ export class NgxRatingComponent implements ControlValueAccessor {
   public canSpawnParticlesForRating = (rating: number) => rating === this.maxValueSubject.value;
 
   public onStarClicked(starIndex: number): void {
-    this.animateToIndex(starIndex);
-    this.ratingSubject.next(starIndex + 1);
-  }
-
-  private animateToIndex(starIndex: number): void {
     this.bounceAnimateToIndex(starIndex);
-
-    if (!this.particlesDisabled) {
-      console.log(starIndex + 1, this.maxValueSubject.value, this.canSpawnParticlesForRating(starIndex + 1));
-
-      if (this.canSpawnParticlesForRating(starIndex + 1)) {
-        console.log('yes');
-        setTimeout(() => this.popParticlesAtIndex(starIndex), starIndex * this.delayPerStarMs);
-      }
-    }
+    this.ratingSubject.next(starIndex + 1);
   }
 
   private bounceAnimateToIndex(starIndex: number): void {
@@ -155,89 +158,6 @@ export class NgxRatingComponent implements ControlValueAccessor {
         this.renderer.addClass(star, 'ngx-rating__star--animating');
       }, 10);
     }
-  }
-
-  private popParticlesAtIndex(starIndex: number): void {
-    if (!this.starContainers) {
-      return;
-    }
-
-    const stars = this.starContainers.toArray().map((elemRef: ElementRef) => elemRef.nativeElement as HTMLElement);
-    if (starIndex >= stars.length) {
-      return;
-    }
-
-    const star = stars[starIndex];
-    const yellowParticleStyle = { color: '#81c784' };
-    const blueParticleStyle = { color: '#4fc3f7' };
-    this.spawnParticle(star, 0, Math.SQRT2, yellowParticleStyle);
-    this.spawnParticle(star, 1, 1, blueParticleStyle);
-    this.spawnParticle(star, Math.SQRT2, 0, yellowParticleStyle);
-    this.spawnParticle(star, 1, -1, blueParticleStyle);
-    this.spawnParticle(star, 0, -Math.SQRT2, yellowParticleStyle);
-    this.spawnParticle(star, -1, -1, blueParticleStyle);
-    this.spawnParticle(star, -Math.SQRT2, 0, yellowParticleStyle);
-    this.spawnParticle(star, -1, 1, blueParticleStyle);
-  }
-
-  private instantiateTemplate(template: TemplateRef<any>): EmbeddedViewRef<any> {
-    console.log(template);
-    return template.createEmbeddedView({});
-  }
-
-  private spawnParticle(
-    parentElem: HTMLElement,
-    x: number,
-    y: number,
-    cssStyle?: { [property: string]: string },
-  ): void {
-    if (!this.defaultParticle) {
-      return;
-    }
-
-    const angle = Math.atan2(y, -x);
-
-    const particle = this.renderer.createElement('div') as HTMLElement;
-    const particleContent = this.renderer.createElement('div') as HTMLElement;
-    const particleScalable = this.renderer.createElement('div') as HTMLElement;
-    const instantiatedTemplate = this.instantiateTemplate(this.defaultParticle);
-    // TODO ALL NODES
-    const particleText = instantiatedTemplate.rootNodes[0];
-
-    if (cssStyle) {
-      Object.keys(cssStyle).forEach((cssProperty: string) => {
-        const cssValue = cssStyle[cssProperty];
-        this.renderer.setStyle(particleText, cssProperty, cssValue);
-      });
-    }
-    this.renderer.addClass(particle, 'ngx-rating__star-container__particle');
-    this.renderer.addClass(particleContent, 'ngx-rating__star-container__particle-content');
-    this.renderer.addClass(particleScalable, 'ngx-rating__star-container__particle-scalable');
-
-    this.renderer.setStyle(particleContent, 'transform', `scale(1)`);
-    this.renderer.setStyle(particleScalable, 'transform', `rotate(${angle}rad`);
-
-    setTimeout(() => {
-      this.renderer.setStyle(
-        particleContent,
-        'transform',
-        `${particleContent.style.transform} translate3d(${x * this.particlesDistanceEm}em, ${
-          y * this.particlesDistanceEm
-        }em, 0)`,
-      );
-      this.renderer.setStyle(particleScalable, 'transform', `${particleScalable.style.transform} scale(0)`);
-    }, 20);
-
-    this.renderer.appendChild(particleScalable, particleText);
-    this.renderer.appendChild(particleContent, particleScalable);
-    this.renderer.appendChild(particle, particleContent);
-    this.renderer.appendChild(parentElem, particle);
-
-    const unlistenEvent = this.renderer.listen(particleScalable, 'transitionend', () => {
-      this.renderer.removeChild(parentElem, particle);
-      instantiatedTemplate.destroy();
-      unlistenEvent();
-    });
   }
 
   public onMouseEnter(starIndex: number): void {
