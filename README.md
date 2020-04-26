@@ -1,16 +1,31 @@
-# ngx-rating
+<p align="center">
+  <img src="docs/img/ngx-rating-icon.svg">
+  <br />
+  ngx-rating is an Angular library that provides a component for star ratings.
+  <br /><br />
+  <a href="https://github.com/Mursaat/ngx-rating/actions">
+    <img src="https://github.com/Mursaat/ngx-rating/workflows/Build/badge.svg" />
+  </a>
+  <a href="https://www.gnu.org/licenses/gpl-3.0">
+    <img src="https://img.shields.io/badge/License-GPLv3-blue.svg" />
+  </a>
+  <a href="https://badge.fury.io/js/%40mursaat%2Fngx-rating">
+    <img src="https://badge.fury.io/js/%40mursaat%2Fngx-rating.svg" />
+  </a>
+</p>
 
-[![Actions Status](https://github.com/Mursaat/ngx-rating/workflows/Build/badge.svg)](https://github.com/Mursaat/ngx-rating/actions)
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-[![npm version](https://badge.fury.io/js/%40mursaat%2Fngx-rating.svg)](https://badge.fury.io/js/%40mursaat%2Fngx-rating)
+---
 
+### Demo
+
+<img src="docs/img/demo-1.gif">
 
 ## TODO
 
-- The README 😊
+- Github page (for the demo + doc)
 
-- CI -> Deploy on npm.js when pushing in master
+- How to use doc
 
-- Unit test (Jest ?) 🤯
+- Write unit tests
 
-- Codecov badge + npm version badge
+- Codecov badge
