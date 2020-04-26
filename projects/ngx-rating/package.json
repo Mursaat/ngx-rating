@@ -1,6 +1,7 @@
 {
   "name": "@mursaat/ngx-rating",
   "version": "9.0.0",
+  "license": "GNU GPL V3",
   "peerDependencies": {
     "@angular/common": "^9.0.0",
     "@angular/core": "^9.0.0",
