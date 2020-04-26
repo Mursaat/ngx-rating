@@ -1,0 +1,16 @@
+.app-toolbar {
+  .mat-toolbar {
+    padding: 0 8px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .app-toolbar-left,
+  .app-toolbar-right {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+}

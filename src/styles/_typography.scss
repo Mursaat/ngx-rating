@@ -1,0 +1,61 @@
+$main-typography: mat-typography-config(
+  $font-family: "'Rubik', sans-serif",
+  $display-4: mat-typography-level(8rem, 1.1, 300),
+  $display-3: mat-typography-level(4rem, 1.1, 400),
+  $display-2: mat-typography-level(3.21rem, 1.2, 400),
+  $display-1: mat-typography-level(2.42rem, 1.2, 400),
+  $headline: mat-typography-level(1.71rem, 1.2, 600),
+  $title: mat-typography-level(1.43rem, 1.2, 600),
+  $subheading-2: mat-typography-level(1.14rem, 1.2, 600),
+  $subheading-1: mat-typography-level(1.07rem, 1.2, 600),
+  $body-2: mat-typography-level(1rem, 1, 600),
+  $body-1: mat-typography-level(1rem, 1, 400),
+  $caption: mat-typography-level(0.85rem, 1, 400),
+  $button: mat-typography-level(1rem, 1, 500),
+  $input: mat-typography-level(inherit, 1.125, 400),
+);
+
+@include angular-material-typography($main-typography);
+
+html {
+  font-size: 14px;
+}
+
+body {
+  @extend .mat-body;
+}
+
+h1 {
+  @extend .mat-h1;
+}
+
+h2 {
+  @extend .mat-h2;
+}
+
+h3 {
+  @extend .mat-h3;
+}
+
+h4 {
+  @extend .mat-h4;
+}
+
+h5 {
+  @extend .mat-h5;
+}
+
+h6 {
+  @extend .mat-h6;
+}
+
+.mat-typography {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 0;
+  }
+}

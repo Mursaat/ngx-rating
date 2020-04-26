@@ -14,5 +14,5 @@ export class DemoComponent {
 
   public starsFormControl = new FormControl();
 
-  public starsCount$ = this.starsFormControl.valueChanges;
+  public starsCountExample2?: number;
 }

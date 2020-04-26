@@ -1,8 +1,10 @@
+@import 'material-theme';
+@import 'functions';
+@import 'fonts';
+@import 'typography';
+@import 'global-theme';
+@import 'themes/light-theme';
+@import 'themes/dark-theme';
 @import 'common';
-@import 'themes';
 
-@import '~@nebular/theme/styles/globals';
-
-@include nb-install() {
-  @include nb-theme-global();
-}
+@import '~highlight.js/styles/github.css';

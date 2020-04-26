@@ -2,4 +2,21 @@
   .app-demo__textarea-message {
     resize: none;
   }
+
+  .app-demo__example-card {
+    padding: 0;
+    margin-bottom: 2rem;
+
+    .mat-card-header {
+      padding: 1rem 0 0 1rem;
+    }
+
+    .mat-card-title {
+      font-size: 1.2rem;
+    }
+  }
+
+  .app-demo__example-card__tab-demo {
+    padding: 0.8rem;
+  }
 }

@@ -1,0 +1,5 @@
+@import 'layout/layout-theme';
+
+@mixin shared-theme($mat-theme) {
+  @include shared-layout-theme($mat-theme);
+}

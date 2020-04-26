@@ -1,0 +1,48 @@
+// Get contrast font color in a palette
+@function mat-contrast($palette, $hue: 500) {
+  @return map-get(map-get($palette, contrast), $hue);
+}
+
+@function mat-foreground($mat-theme, $value) {
+  @return map-get(map-get($mat-theme, foreground), $value);
+}
+
+@function mat-background($mat-theme, $value) {
+  @return map-get(map-get($mat-theme, background), $value);
+}
+
+@function mat-primary-color($mat-theme, $hue: 500) {
+  @return mat-color(map-get($mat-theme, primary), $hue);
+}
+
+@function mat-primary-contrast($mat-theme, $hue: 500) {
+  @return mat-contrast(map-get($mat-theme, primary), $hue);
+}
+
+@function mat-accent-color($mat-theme, $hue: 500) {
+  @return mat-color(map-get($mat-theme, accent), $hue);
+}
+
+@function mat-accent-contrast($mat-theme, $hue: 500) {
+  @return mat-contrast(map-get($mat-theme, primary), $hue);
+}
+
+// If light theme : Darken a color
+// If dark theme : Lighten a color
+@function darken-if-light($mat-theme, $color, $percentage) {
+  @if map-get($mat-theme, is-dark) {
+    @return mix(white, $color, $percentage);
+  } @else {
+    @return mix(black, $color, $percentage);
+  }
+}
+
+// If light theme : Lighten a color
+// If dark theme : darken a color
+@function lighten-if-light($mat-theme, $color, $percentage) {
+  @if map-get($mat-theme, is-dark) {
+    @return mix(black, $color, $percentage);
+  } @else {
+    @return mix(white, $color, $percentage);
+  }
+}

@@ -1,0 +1,8 @@
+$app-primary-palette: mat-palette($mat-indigo);
+$app-accent-palette: mat-palette($mat-pink, 'A200', 'A100', 'A400');
+$app-dark-theme: mat-dark-theme($app-primary-palette, $app-accent-palette);
+
+@media screen and (prefers-color-scheme: dark) {
+  @include angular-material-theme($app-dark-theme);
+  @include global-theme($app-dark-theme);
+}

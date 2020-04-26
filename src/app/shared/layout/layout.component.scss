@@ -1,0 +1,26 @@
+.app-layout {
+  display: flex;
+  flex-direction: column;
+
+  .app-layout__header {
+    z-index: 10;
+    transition: box-shadow 0.3s ease-in-out;
+  }
+
+  .app-layout__scrollable-container {
+    flex: auto;
+  }
+
+  .app-layout__scrollable {
+    overflow-y: auto;
+  }
+
+  .app-layout-content {
+    display: block;
+    padding: 2.5rem 4rem;
+
+    @media screen and (max-width: 500px) {
+      padding: 1rem;
+    }
+  }
+}

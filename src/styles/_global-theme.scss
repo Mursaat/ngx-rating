@@ -1,0 +1,5 @@
+@import '../app/app-theme';
+
+@mixin global-theme($mat-theme) {
+  @include app-theme($mat-theme);
+}

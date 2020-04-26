@@ -1,20 +1,18 @@
-<nb-layout>
-  <nb-layout-header fixed>
-    <div class="app-root__header-content app-fill-width">
-      <h4 class="app-root__app-title-container">
-        <span>ngx-rating</span>
-      </h4>
-      <div class="app-root__theme-toggle-container">
-        <nb-toggle labelPosition="start" [checked]="isDarkTheme$ | async" (checkedChange)="onThemeToggled($event)">
-          Dark Theme
-        </nb-toggle>
-      </div>
-    </div>
-  </nb-layout-header>
-
-  <nb-sidebar>Sidebar Content</nb-sidebar>
-
-  <nb-layout-column>
-    <router-outlet></router-outlet>
-  </nb-layout-column>
-</nb-layout>
+<main class="mat-app-background app-fill-height">
+  <app-layout class="app-fill-height app-fill-width app-news-container__layout">
+    <app-toolbar>
+      <app-toolbar-left fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+        <span class="app-root__title">ngx-rating</span>
+      </app-toolbar-left>
+      <app-toolbar-right>
+        <button mat-button>
+          <mat-icon svgIcon="github" class="app-root__btn-icon"></mat-icon>
+          <span>Github</span>
+        </button>
+      </app-toolbar-right>
+    </app-toolbar>
+    <app-layout-content>
+      <router-outlet></router-outlet>
+    </app-layout-content>
+  </app-layout>
+</main>

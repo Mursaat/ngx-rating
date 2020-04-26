@@ -1,0 +1,9 @@
+@import 'shared/shared-theme';
+@import 'core/core-theme';
+@import 'demo/demo-theme';
+
+@mixin app-theme($mat-theme) {
+  @include shared-theme($mat-theme);
+  @include core-theme($mat-theme);
+  @include demo-theme($mat-theme);
+}

@@ -1,0 +1,10 @@
+@mixin demo-theme($mat-theme) {
+  .app-demo {
+    .app-demo__example-card {
+      .mat-card-header {
+        color: mat-foreground($mat-theme, secondary-text);
+        background-color: mat-background($mat-theme, status-bar);
+      }
+    }
+  }
+}
