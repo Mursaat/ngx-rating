@@ -2,6 +2,9 @@
   "name": "@mursaat/ngx-rating",
   "version": "9.0.1",
   "license": "GNU GPL V3",
+  "homepage": "https://mursaat.github.io/ngx-rating/",
+  "repository": "https://github.com/Mursaat/ngx-rating",
+  "description": "ngx-rating is an Angular library that provides a component for star ratings",
   "peerDependencies": {
     "@angular/common": "^9.0.0",
     "@angular/core": "^9.0.0",
