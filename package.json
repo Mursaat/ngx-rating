@@ -5,13 +5,13 @@
     "ng": "ng",
     "build:library:watch": "ng build ngx-rating --watch",
     "start": "ng serve",
-    "build": "ng build ngx-rating --prod",
+    "build": "npm run copy-readme && ng build ngx-rating --prod",
     "build:demo": "ng build --prod",
     "test": "ng test",
     "lint": "npm run tslint && npm run stylelint",
     "tslint": "ng lint",
     "stylelint": "stylelint \"src/**/*.scss\" --syntax scss",
-    "e2e": "ng e2e"
+    "copy-readme": "copyfiles README.md docs/**/* projects/ngx-rating"
   },
   "private": true,
   "dependencies": {
@@ -44,6 +44,7 @@
     "@types/jest": "^25.2.1",
     "@types/node": "^12.11.1",
     "codelyzer": "^5.1.2",
+    "copyfiles": "^2.2.0",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~4.2.1",
     "jest": "^25.4.0",

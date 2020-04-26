@@ -44,3 +44,7 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# The library docs are copied from the root folder to the library folder on build
+/projects/ngx-rating/docs/**/*
+/projects/ngx-rating/README.md
