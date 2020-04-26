@@ -37,7 +37,6 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Build page
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
