@@ -33,17 +33,21 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
-  publish-gpr:
+  deploy-action-pages:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Build page
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-          registry-url: https://npm.pkg.github.com/
+          registry-url: https://registry.npmjs.org/  
       - run: npm ci
       - run: npm run build
-      - run: cd dist/ngx-rating && npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - run: npm run build:demo
+        
+      - name: Deploy on Github Pages
+        uses: crazy-max/ghaction-github-pages@v1.4.0
+        with:
+          build_dir: dist/ngx-rating-app
