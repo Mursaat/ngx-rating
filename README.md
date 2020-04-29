@@ -23,4 +23,7 @@
 ### Demo
 
 <img src="docs/img/demo-1.gif">
+
+⚠️ This library is not finished and should not be used yet. ⚠️
+
 Demo and documentation here: https://mursaat.github.io/ngx-rating
