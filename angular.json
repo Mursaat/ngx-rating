@@ -31,6 +31,7 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
+              "baseHref": "ngx-rating",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
