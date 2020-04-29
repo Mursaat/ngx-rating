@@ -13,7 +13,7 @@
     <img src="https://badge.fury.io/js/%40mursaat%2Fngx-rating.svg" />
   </a>
   <a href="https://www.npmjs.com/package/%40mursaat%2Fngx-rating%0A">
-    <img src="https://img.shields.io/npm/dm/%40mursaat%2Fngx-rating%0A%40mursaat%2Fngx-rating%0A.svg" />
+    <img src="https://img.shields.io/npm/dm/%40mursaat%2Fngx-rating%0A.svg" />
   </a>
 
 </p>
