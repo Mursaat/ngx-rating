@@ -23,13 +23,4 @@
 ### Demo
 
 <img src="docs/img/demo-1.gif">
-
-## TODO
-
-- Github page (for the demo + doc)
-
-- How to use doc
-
-- Write unit tests
-
-- Codecov badge
+Demo and documentation here: https://mursaat.github.io/ngx-rating
