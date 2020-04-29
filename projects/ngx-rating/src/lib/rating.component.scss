@@ -10,9 +10,11 @@
     display: flex;
     position: relative;
     cursor: pointer;
+    transition: transform 0.12s ease-in-out;
 
-    &--animating {
-      animation: ngxRatingStarScale 0.75s ease-in-out;
+    &:hover {
+      transform: scale(1.2);
+      z-index: 2;
     }
   }
 
@@ -23,6 +25,15 @@
     justify-content: center;
     width: 100%;
     height: 100%;
+  }
+
+  .ngx-rating__star__animation-container {
+    width: 100%;
+    height: 100%;
+
+    &--animating {
+      animation: ngxRatingStarScale 0.75s ease-in-out;
+    }
   }
 
   .ngx-rating__star__svg {

@@ -34,7 +34,7 @@ export class CodeSectionComponent {
 
   public code$ = combineLatest([this.exampleIDSubject, this.languageSubject]).pipe(
     switchMap(([exampleID, language]: [number, Language]) =>
-      this.http.get(`assets/examples/${exampleID}/example.${language}`, { responseType: 'text' }),
+      this.http.get(`assets/examples/${exampleID}/example.component.${language}`, { responseType: 'text' }),
     ),
     shareReplay(1),
   );

@@ -1,0 +1,18 @@
+.app-example {
+  .app-example__card {
+    padding: 0;
+    margin-bottom: 2rem;
+
+    .mat-card-header {
+      padding: 1rem 0 0 1rem;
+    }
+
+    .mat-card-title {
+      font-size: 1.2rem;
+    }
+  }
+
+  .app-example__card__tab-demo {
+    padding: 0.8rem;
+  }
+}

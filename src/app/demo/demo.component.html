@@ -1,51 +1,7 @@
-<!-- DEMO 1 -->
-<mat-card class="app-demo__example-card">
-  <mat-card-header>
-    <mat-card-title>Basic use of the component</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <mat-tab-group>
-      <mat-tab label="Demo">
-        <ng-template matTabContent>
-          <div class="app-demo__example-card__tab-demo">
-            <ngx-rating [formControl]="starsFormControl"></ngx-rating>
-          </div>
-        </ng-template>
-      </mat-tab>
-      <mat-tab label="HTML">
-        <ng-template matTabContent>
-          <app-code-section language="html" exampleID="1"></app-code-section>
-        </ng-template>
-      </mat-tab>
-    </mat-tab-group>
-  </mat-card-content>
-</mat-card>
+<app-example name="Basic use of the component" [id]="1">
+  <app-example-1></app-example-1>
+</app-example>
 
-<!-- DEMO 2 -->
-<mat-card class="app-demo__example-card">
-  <mat-card-header>
-    <mat-card-title>Data Binding</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <mat-tab-group>
-      <mat-tab label="Demo">
-        <ng-template matTabContent>
-          <div class="app-demo__example-card__tab-demo">
-            <ngx-rating [(ngModel)]="starsCountExample2"></ngx-rating>
-            <div *ngIf="starsCountExample2">You have selected {{ starsCountExample2 }} stars</div>
-          </div>
-        </ng-template>
-      </mat-tab>
-      <mat-tab label="HTML">
-        <ng-template matTabContent>
-          <app-code-section language="html" exampleID="2"></app-code-section>
-        </ng-template>
-      </mat-tab>
-      <mat-tab label="TS">
-        <ng-template matTabContent>
-          <app-code-section language="ts" exampleID="2"></app-code-section>
-        </ng-template>
-      </mat-tab>
-    </mat-tab-group>
-  </mat-card-content>
-</mat-card>
+<app-example name="Data Binding" [id]="2">
+  <app-example-2></app-example-2>
+</app-example>

@@ -32,7 +32,7 @@ export class NgxRatingComponent implements ControlValueAccessor {
   @HostBinding('attr.aria-label')
   public ariaLabel = 'Stars to give an opinion';
 
-  @ViewChildren('star')
+  @ViewChildren('starAnimationContainer')
   public stars: QueryList<ElementRef> | undefined;
 
   private ratingSubject = new Subject<number>();
@@ -40,26 +40,30 @@ export class NgxRatingComponent implements ControlValueAccessor {
     distinctUntilChanged(),
     tap((rating: number) => this.propagateChange(rating)),
     shareReplay(1),
-    startWith(0),
+    startWith(undefined),
   );
 
-  private hoveredStarIndexSubject = new BehaviorSubject<number | undefined>(undefined);
-  public hoveredStarIndex$ = this.hoveredStarIndexSubject.pipe(shareReplay(1));
+  private hoveredRatingSubject = new BehaviorSubject<number | undefined>(undefined);
+  public hoveredRating$ = this.hoveredRatingSubject.pipe(shareReplay(1));
 
-  public starIndexToShow$ = combineLatest([this.rating$, this.hoveredStarIndex$]).pipe(
-    map(([rating, hoveredStarIndex]: [number, number | undefined]) =>
-      hoveredStarIndex !== undefined ? hoveredStarIndex : rating - 1,
-    ),
+  public ratingToShow$ = combineLatest([this.rating$, this.hoveredRating$]).pipe(
+    map(([rating, hoveredRating]: [number | undefined, number | undefined]) => (rating ? rating : hoveredRating)),
+    shareReplay(1),
+  );
+
+  public starIndexToShow$ = this.ratingToShow$.pipe(
+    map((rating: number | undefined) => (rating ? rating - 1 : rating)),
+    shareReplay(1),
   );
 
   private maxValueSubject = new BehaviorSubject<number>(DEFAULT_MAX_VALUE);
   public maxValue$ = this.maxValueSubject.pipe(shareReplay(1));
 
-  public starIterator$ = this.maxValue$.pipe(
+  public starRatingIterator$ = this.maxValue$.pipe(
     map((maxValue: number) =>
       Array<number>(maxValue)
         .fill(0)
-        .map((_val: number, starIndex: number) => starIndex),
+        .map((_val: number, starIndex: number) => starIndex + 1),
     ),
   );
 
@@ -137,35 +141,32 @@ export class NgxRatingComponent implements ControlValueAccessor {
 
   public constructor(private renderer: Renderer2) {}
 
-  @Input()
-  public canSpawnParticlesForRating = (rating: number) => rating === this.maxValueSubject.value;
-
-  public onStarClicked(starIndex: number): void {
-    this.bounceAnimateToIndex(starIndex);
-    this.ratingSubject.next(starIndex + 1);
+  public onStarClicked(rating: number): void {
+    this.bounceAnimateToRating(rating);
+    this.ratingSubject.next(rating);
   }
 
-  private bounceAnimateToIndex(starIndex: number): void {
+  private bounceAnimateToRating(rating: number): void {
     if (!this.stars) {
       return;
     }
 
     const stars = this.stars.toArray().map((elemRef: ElementRef) => elemRef.nativeElement as HTMLElement);
-    for (let i = 0; i <= starIndex; ++i) {
+    for (let i = 0; i <= rating - 1; ++i) {
       const star = stars[i];
-      this.renderer.removeClass(star, 'ngx-rating__star--animating');
+      this.renderer.removeClass(star, 'ngx-rating__star__animation-container--animating');
       setTimeout(() => {
-        this.renderer.addClass(star, 'ngx-rating__star--animating');
+        this.renderer.addClass(star, 'ngx-rating__star__animation-container--animating');
       }, 10);
     }
   }
 
-  public onMouseEnter(starIndex: number): void {
-    this.hoveredStarIndexSubject.next(starIndex);
+  public onMouseEnter(rating: number): void {
+    this.hoveredRatingSubject.next(rating);
   }
 
-  public onMouseLeave(_starIndex: number): void {
-    this.hoveredStarIndexSubject.next(undefined);
+  public onMouseLeave(_rating: number): void {
+    this.hoveredRatingSubject.next(undefined);
   }
 
   /////////////////////////////////////////

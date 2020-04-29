@@ -1,31 +1,34 @@
 <ng-container *ngIf="colors$ | async as colors">
   <div
-    #star
-    *ngFor="let starIndex of starIterator$ | async"
+    *ngFor="let starRating of starRatingIterator$ | async"
     class="ngx-rating__star"
-    (click)="onStarClicked(starIndex)"
-    (mouseenter)="onMouseEnter(starIndex)"
-    (mouseleave)="onMouseLeave(starIndex)"
-    [attr.aria-label]="((starAriaLabels$ | async) || [])[starIndex]"
-    [style.animation-delay]="starIndex * delayPerStarMs + 'ms'"
+    (click)="onStarClicked(starRating)"
+    (mouseenter)="onMouseEnter(starRating)"
+    (mouseleave)="onMouseLeave(starRating)"
+    [attr.aria-label]="((starAriaLabels$ | async) || [])[starRating - 1]"
   >
     <div
-      class="ngx-rating__star__svg ngx-rating__star__svg--filled"
-      [style.animation-delay]="starIndex * delayPerStarMs + 'ms'"
-      [style.color]="
-        starIndex <= ((starIndexToShow$ | async) || 0) ? colors[(starIndexToShow$ | async) || 0] : emptyColor
-      "
+      #starAnimationContainer
+      [style.animation-delay]="(starRating - 1) * delayPerStarMs + 'ms'"
+      class="ngx-rating__star__animation-container"
     >
-      <div class="ngx-rating__star__svg-centerer">
-        <ng-container *ngIf="starIndex <= ((starIndexToShow$ | async) || 0)">
-          <ng-container *ngTemplateOutlet="starFilledDefaultTemplate"></ng-container>
-        </ng-container>
+      <div
+        class="ngx-rating__star__svg ngx-rating__star__svg--filled"
+        [style.color]="
+          starRating <= ((ratingToShow$ | async) || 0) ? colors[(starIndexToShow$ | async) || 0] : emptyColor
+        "
+      >
+        <div class="ngx-rating__star__svg-centerer">
+          <ng-container *ngIf="starRating <= ((ratingToShow$ | async) || 0)">
+            <ng-container *ngTemplateOutlet="starFilledDefaultTemplate"></ng-container>
+          </ng-container>
+        </div>
       </div>
-    </div>
 
-    <div class="ngx-rating__star__svg ngx-rating__star__svg--empty" [style.color]="emptyColor">
-      <div class="ngx-rating__star__svg-centerer">
-        <ng-container *ngTemplateOutlet="starEmptyDefaultTemplate"></ng-container>
+      <div class="ngx-rating__star__svg ngx-rating__star__svg--empty" [style.color]="emptyColor">
+        <div class="ngx-rating__star__svg-centerer">
+          <ng-container *ngTemplateOutlet="starEmptyDefaultTemplate"></ng-container>
+        </div>
       </div>
     </div>
   </div>
