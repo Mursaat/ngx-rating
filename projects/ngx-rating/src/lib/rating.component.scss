@@ -37,6 +37,7 @@
   }
 
   .ngx-rating__star__svg {
+    overflow: hidden;
     position: absolute;
     left: 0;
     top: 0;
